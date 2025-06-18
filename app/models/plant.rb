@@ -51,6 +51,20 @@ class Plant < ApplicationRecord
     :quest_completed
   end
 
+  def daily_log
+    plant_logs.find_or_create_by(date: Date.current)
+  end
+
+  def assign_daily_quest!
+    log = daily_log
+    return log.quest if log.quest.present?
+
+    quest = Quest.where(active: true).order("RANDOM()").first
+    log.update!(quest: quest)
+
+    quest
+  end
+
   private
 
   def evaluate_mood!

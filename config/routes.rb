@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get  "/plant",        to: "plants#show",      as: :plant
+  post "/plant/water",  to: "plants#water",     as: :water_plant
+  post "/plant/quest",  to: "plants#do_quest",  as: :quest_plant
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

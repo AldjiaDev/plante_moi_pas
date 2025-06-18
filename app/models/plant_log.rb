@@ -1,5 +1,4 @@
 class PlantLog < ApplicationRecord
   belongs_to :plant
-
-  validates :date, uniqueness: { scope: :plant_id }
+  belongs_to :quest, optional: true
 end

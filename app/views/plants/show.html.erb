@@ -1,0 +1,23 @@
+<h1>🌱 <%= @plant.name %></h1>
+<p>Humeur : <strong><%= @plant.mood %></strong></p>
+<p>État : <%= @plant.state %></p>
+<p>Dernier arrosage : <%= @plant.last_watered_at&.strftime("%d %B %Y à %Hh%M") || "jamais" %></p>
+<p>Feuilles : <%= @plant.leaves %></p>
+
+<%= button_to "💧 Arroser", water_plant_path, method: :post %>
+
+<hr>
+
+<h2>🎯 Quête du jour :</h2>
+<p><strong><%= @quest.title %></strong></p>
+<p><%= @quest.description %></p>
+
+<% if @log.quest_done? %>
+  <p>✅ Quête déjà complétée</p>
+<% else %>
+  <%= button_to "Faire la quête", quest_plant_path, method: :post %>
+<% end %>
+
+<% if notice %>
+  <p style="color: green;"><%= notice %></p>
+<% end %>
