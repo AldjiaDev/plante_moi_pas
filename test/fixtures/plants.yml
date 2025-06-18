@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  name: MyString
+  last_watered_at: 2025-06-18 15:05:29
+  consecutive_days_watered: 1
+  mood: MyString
+  leaves: 1
+  state: MyString
+
+two:
+  user: two
+  name: MyString
+  last_watered_at: 2025-06-18 15:05:29
+  consecutive_days_watered: 1
+  mood: MyString
+  leaves: 1
+  state: MyString
