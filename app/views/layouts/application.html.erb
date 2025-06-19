@@ -9,6 +9,7 @@
 
     <%= yield :head %>
 
+    <!-- Icônes et manifest -->
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
@@ -22,24 +23,29 @@
       }
     </style>
 
+    <!-- Tailwind + App CSS -->
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-    <body class="bg-plante-clair min-h-screen text-gray-800 font-sans">
-    <div class="max-w-3xl mx-auto px-4 py-6">
+  <body class="bg-plante-clair min-h-screen text-gray-800 font-sans antialiased">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
-      <!-- Mini Header -->
+      <!-- ✅ Mini Header -->
       <header class="flex items-center justify-between mb-6">
         <h1 class="text-2xl font-bold text-plante">🌿 Plante-moi pas</h1>
+
         <% if user_signed_in? %>
-          <%= link_to "Déconnexion", destroy_user_session_path, method: :delete,
-              class: "text-sm bg-plante hover:bg-plante-fonce text-white font-medium py-1 px-3 rounded" %>
+          <div class="flex items-center gap-3">
+            <%= link_to "Profil", profile_path, class: "text-sm text-gray-600 hover:text-green-700" %>
+            <%= link_to "Déconnexion", destroy_user_session_path, method: :delete,
+                  class: "text-sm bg-plante hover:bg-plante-fonce text-white font-medium py-1 px-3 rounded" %>
+          </div>
         <% end %>
       </header>
 
-      <!-- Flash messages -->
+      <!-- ✅ Flash messages -->
       <% if notice %>
         <div class="bg-green-100 text-green-800 p-3 rounded-xl mb-4 border border-green-300">
           <%= notice %>
@@ -52,7 +58,7 @@
         </div>
       <% end %>
 
-      <!-- Contenu principal -->
+      <!-- ✅ Contenu principal -->
       <%= yield %>
     </div>
   </body>

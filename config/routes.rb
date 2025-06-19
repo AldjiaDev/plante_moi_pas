@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "profiles/show"
   devise_for :users
   get  "/plant",        to: "plants#show",      as: :plant
   post "/plant/water",  to: "plants#water",     as: :water_plant
@@ -6,6 +7,10 @@ Rails.application.routes.draw do
   post "/plant/quest/answer", to: "plants#submit_quest_response", as: :submit_quest_response
 
   resource :plant, only: [:show, :new, :create]
+  resource :profile, only: [:show]
+  get 'mon_profil', to: 'users#profile', as: 'mon_profil'
+
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
