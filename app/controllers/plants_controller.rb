@@ -36,10 +36,10 @@ class PlantsController < ApplicationController
 
 
   def water
-    @user = current_user
-    @plant = @user.plant
-    result = @plant.water_today!
-    redirect_to plant_path, notice: (result == :already_watered ? "Déjà arrosée !" : "Plante arrosée 💧")
+    @plant = current_user.plant
+    @plant.water_today!
+
+    redirect_to plant_path, notice: "Merci de m’avoir arrosée 💦🌱 Je me sens déjà mieux !"
   end
 
   def do_quest
