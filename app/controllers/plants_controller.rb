@@ -4,6 +4,7 @@ class PlantsController < ApplicationController
   def show
     @user = current_user
     @plant = @user.plant
+    @plant.update_mood_if_new_day!
 
     unless @plant
       redirect_to new_plant_path and return
@@ -15,17 +16,24 @@ class PlantsController < ApplicationController
   end
 
   def new
-    @plant = Plant.new
+    @plant = current_user.build_plant
   end
 
   def create
     @plant = current_user.build_plant(plant_params)
+    @plant.last_watered_at = Time.current
+    @plant.state = "active"
+    @plant.mood = "joyeuse"
+    @plant.consecutive_days_watered = 1
+    @plant.growth_stage = "sprout"
+
     if @plant.save
-      redirect_to plant_path
+      redirect_to plant_path, notice: "Ta plante est née !"
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
+
 
   def water
     @user = current_user
@@ -64,6 +72,6 @@ class PlantsController < ApplicationController
   private
 
   def plant_params
-    params.require(:plant).permit(:name)
+    params.require(:plant).permit(:name, :personality)
   end
 end

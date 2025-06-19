@@ -1,10 +1,22 @@
-<h1>Crée ta plante 🌱</h1>
+<h2>🌱 Crée ta plante</h2>
 
-<%= form_with model: @plant, url: plant_path do |form| %>
+<%= form_with model: @plant, url: plant_path, method: :post do |form| %>
   <div>
     <%= form.label :name, "Nom de ta plante" %><br>
     <%= form.text_field :name %>
   </div>
 
-  <%= form.submit "Faire pousser 🌿" %>
+  <div>
+    <%= form.label :personality, "Personnalité" %><br>
+    <%= form.select :personality, options_for_select([
+      ["🎭 Drama Queen", "drama"],
+      ["😏 Ironique", "ironic"],
+      ["🐍 Agressive", "aggressive"],
+      ["🌧️ Mélancolique", "melancholic"],
+      ["🌈 Gentille", "gentle"]
+    ]) %>
+  </div>
+
+  <%= form.submit "Créer ma plante" %>
 <% end %>
+

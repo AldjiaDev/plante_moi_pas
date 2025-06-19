@@ -24,14 +24,11 @@
 
 <h2>🌿 État de ta plante :</h2>
 
-<!-- 🗣️ Message de la plante -->
-<p class="italic text-gray-700 text-lg mb-2">
-  <%= @plant.daily_message %>
+<!-- 🗣️ Message d’humeur selon la personnalité -->
+<p class="italic text-purple-700 text-lg mb-4">
+  <%= @plant.mood_phrase %>
 </p>
 
-<p class="text-sm italic text-green-600 mb-4">
-  <%= @plant.mood_message %>
-</p>
 
 <!-- 🌱 Visuel selon le stade -->
 <% case @plant.growth_stage %>

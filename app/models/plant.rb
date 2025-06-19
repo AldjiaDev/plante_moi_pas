@@ -2,6 +2,9 @@ class Plant < ApplicationRecord
   belongs_to :user
   has_many :plant_logs, dependent: :destroy
 
+  MOODS = %w[joyeuse aggressive mélancolique ironique]
+
+
   def water_today!
     today = Date.current
 
@@ -139,8 +142,59 @@ class Plant < ApplicationRecord
   end
 
   def mood_message
-    MoodLibrary.random_message_for(mood)
+    MoodLibrary.random_message_for(mood, personality)
   end
+
+  def mood_phrase
+    PHRASES_BY_PERSONALITY.dig(personality, mood)&.sample || "Je suis... une énigme botanique."
+  end
+
+PHRASES_BY_PERSONALITY = {
+  "drama" => {
+    "joyeuse" => [
+      "Ce rayon de soleil… c’est toi ? 😭",
+      "Je suis en vie. Pour l’instant.",
+    ],
+    "aggressive" => [
+      "Ne m’approche pas avec ce vieux vaporisateur !",
+      "Tu crois que je suis une herbe de déco ? Je suis une *reine tragique*.",
+    ],
+    "mélancolique" => [
+      "Parfois, je rêve que j’étais un cactus. Sans cœur, mais stable.",
+      "Arrosée… mais jamais comblée.",
+    ],
+    "ironique" => [
+      "Tu t’es souvenu(e) de moi ? Une ovation s’impose.",
+      "Je te pardonne. Pour l’instant.",
+    ]
+  },
+  "ironic" => {
+    "joyeuse" => [
+      "Je me sens photosynthétiquement radieuse.",
+      "Je suis belle. Et je le sais.",
+    ],
+    "aggressive" => [
+      "Encore toi ? On s’ennuie pas, hein.",
+      "Tu verses de l’eau ou de la culpabilité ?",
+    ],
+    "mélancolique" => [
+      "Tout ça pour ça ? Une goutte d’eau ?",
+      "Je fais genre que je pousse, mais en vrai je broie du vert.",
+    ]
+  }
+  # Tu peux ajouter d'autres personnalités plus tard : "gentle", "melancholic", etc.
+}
+
+  def update_mood_if_new_day!
+    return if last_mood_update_at&.to_date == Date.today
+
+    update!(
+      mood: MOODS.sample,
+      last_mood_update_at: Time.current
+    )
+  end
+
+
 
   private
 
