@@ -1,23 +1,34 @@
-<h1>🌱 <%= @plant.name %></h1>
-<p>Humeur : <strong><%= @plant.mood %></strong></p>
-<p>État : <%= @plant.state %></p>
-<p>Dernier arrosage : <%= @plant.last_watered_at&.strftime("%d %B %Y à %Hh%M") || "jamais" %></p>
-<p>Feuilles : <%= @plant.leaves %></p>
-
-<%= button_to "💧 Arroser", water_plant_path, method: :post %>
-
-<hr>
-
 <h2>🎯 Quête du jour :</h2>
 <p><strong><%= @quest.title %></strong></p>
 <p><%= @quest.description %></p>
 
 <% if @log.quest_done? %>
   <p>✅ Quête déjà complétée</p>
+  <% if @log.quest_response.present? %>
+    <p><em>Ta réponse : <%= @log.quest_response %></em></p>
+  <% end %>
+<% elsif @quest.quest_type == "text_input" %>
+  <%= form_with url: submit_quest_response_path, method: :post do |form| %>
+    <div>
+      <%= form.label :quest_response, "Ta réponse :" %><br>
+      <%= form.text_area :quest_response, rows: 3 %>
+    </div>
+    <%= form.submit "Envoyer" %>
+  <% end %>
 <% else %>
   <%= button_to "Faire la quête", quest_plant_path, method: :post %>
 <% end %>
+<hr>
+<h2>🏆 Succès débloqués :</h2>
 
-<% if notice %>
-  <p style="color: green;"><%= notice %></p>
+<% if @unlocked_achievements.any? %>
+  <ul>
+    <% @unlocked_achievements.each do |achievement| %>
+      <li>
+        <strong><%= achievement.name %></strong> — <%= achievement.description %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Aucun succès encore… mais ça viendra 😏</p>
 <% end %>

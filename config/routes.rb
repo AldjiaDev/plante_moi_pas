@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   get  "/plant",        to: "plants#show",      as: :plant
   post "/plant/water",  to: "plants#water",     as: :water_plant
   post "/plant/quest",  to: "plants#do_quest",  as: :quest_plant
+  post "/plant/quest/answer", to: "plants#submit_quest_response", as: :submit_quest_response
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_18_133937) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_19_064643) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "achievements", force: :cascade do |t|
+    t.string "code"
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "plant_logs", force: :cascade do |t|
     t.bigint "plant_id", null: false
@@ -23,6 +31,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_18_133937) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "quest_id"
+    t.text "quest_response"
     t.index ["plant_id"], name: "index_plant_logs_on_plant_id"
     t.index ["quest_id"], name: "index_plant_logs_on_quest_id"
   end
@@ -50,6 +59,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_18_133937) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_achievements", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "achievement_id", null: false
+    t.datetime "unlocked_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["achievement_id"], name: "index_user_achievements_on_achievement_id"
+    t.index ["user_id"], name: "index_user_achievements_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "password_digest"
@@ -60,4 +79,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_18_133937) do
   add_foreign_key "plant_logs", "plants"
   add_foreign_key "plant_logs", "quests"
   add_foreign_key "plants", "users"
+  add_foreign_key "user_achievements", "achievements"
+  add_foreign_key "user_achievements", "users"
 end

@@ -32,6 +32,8 @@ class Plant < ApplicationRecord
 
     save!
 
+    check_achievements!
+
     :watered
   end
 
@@ -47,6 +49,8 @@ class Plant < ApplicationRecord
     self.leaves ||= 0
     self.leaves += reward_points
     save!
+
+    check_achievements!
 
     :quest_completed
   end
@@ -64,6 +68,46 @@ class Plant < ApplicationRecord
 
     quest
   end
+
+  def submit_quest_response!(response)
+    log = daily_log
+
+    return :no_quest unless log.quest
+    return :invalid_type unless log.quest.quest_type == "text_input"
+    return :already_done if log.quest_done?
+
+    log.quest_response = response
+    log.quest_done = true
+    log.save!
+
+    self.leaves ||= 0
+    self.leaves += log.quest.reward_points
+    save!
+
+    :quest_completed
+  end
+
+  def check_achievements!
+    user = self.user
+
+    unlock = ->(code) do
+      achievement = Achievement.find_by(code: code)
+      return if user.achievements.include?(achievement)
+      UserAchievement.create!(user: user, achievement: achievement, unlocked_at: Time.current)
+    end
+
+    unlock.call("water_5_days") if consecutive_days_watered >= 5
+    unlock.call("quest_10_completed") if plant_logs.where(quest_done: true).count >= 10
+    unlock.call("revived_after_death") if state == "active" && previous_state_was_gone?
+  end
+
+  def previous_state_was_gone?
+    plant_logs.order(date: :desc).limit(5).any? do |log|
+      log.mood == "partie"
+    end
+  end
+
+
 
   private
 

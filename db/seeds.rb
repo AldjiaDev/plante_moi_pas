@@ -7,3 +7,21 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+Achievement.create!(
+  code: "water_5_days",
+  name: "Routine en herbe",
+  description: "Tu m’as arrosée 5 jours d’affilée. Est-ce… de l’amour ?"
+)
+
+Achievement.create!(
+  code: "quest_10_completed",
+  name: "Missionnaire végétal",
+  description: "Tu as complété 10 de mes caprices quotidiens. T'es solide."
+)
+
+Achievement.create!(
+  code: "revived_after_death",
+  name: "Tu reviens toujours",
+  description: "Tu m’as laissée mourir… puis tu es revenu(e). Je te pardonne. Peut-être."
+)
