@@ -120,6 +120,27 @@ class Plant < ApplicationRecord
     update!(growth_stage: stage)
   end
 
+  def daily_message
+    if last_watered_at.nil?
+      "T’as pas l’intention de t’occuper de moi un jour, ou… ?"
+    elsif last_watered_at.to_date == Date.today
+      if consecutive_days_watered >= 7
+        "On commence à se faire confiance toi et moi 🌿"
+      elsif consecutive_days_watered >= 3
+        "Tu reviens… j’aime bien ça."
+      else
+        "Bon… au moins tu fais l’effort. Je note."
+      end
+    elsif last_watered_at.to_date == Date.yesterday
+      "T’es venu hier, c’est déjà ça."
+    else
+      "Je t’ai pas vu depuis #{(Date.today - last_watered_at.to_date).to_i} jours. J’étais… *trop bien sans toi ?* 😒"
+    end
+  end
+
+  def mood_message
+    MoodLibrary.random_message_for(mood)
+  end
 
   private
 
