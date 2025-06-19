@@ -1,0 +1,10 @@
+<h1>Crée ta plante 🌱</h1>
+
+<%= form_with model: @plant, url: plant_path do |form| %>
+  <div>
+    <%= form.label :name, "Nom de ta plante" %><br>
+    <%= form.text_field :name %>
+  </div>
+
+  <%= form.submit "Faire pousser 🌿" %>
+<% end %>
