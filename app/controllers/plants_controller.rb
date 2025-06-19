@@ -4,12 +4,12 @@ class PlantsController < ApplicationController
   def show
     @user = current_user
     @plant = @user.plant
-    @plant.update_mood_if_new_day!
 
     unless @plant
       redirect_to new_plant_path and return
     end
 
+    @plant.update_mood_if_new_day!
     @log = @plant.daily_log
     @quest = @log.quest || @plant.assign_daily_quest!
     @unlocked_achievements = @user.achievements
