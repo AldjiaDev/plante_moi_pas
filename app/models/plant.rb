@@ -35,6 +35,7 @@ class Plant < ApplicationRecord
     check_achievements!
 
     :watered
+    update_growth_stage!
   end
 
   def do_quest_today!(reward_points = 3)
@@ -107,6 +108,17 @@ class Plant < ApplicationRecord
     end
   end
 
+  def update_growth_stage!
+    stage =
+      case consecutive_days_watered
+      when 0..2 then "sprout"
+      when 3..4 then "leafy"
+      when 5..6 then "bushy"
+      else "tree"
+      end
+
+    update!(growth_stage: stage)
+  end
 
 
   private
