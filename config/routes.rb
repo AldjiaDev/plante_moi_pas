@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   post "/plant/quest",  to: "plants#do_quest",  as: :quest_plant
   post "/plant/quest/answer", to: "plants#submit_quest_response", as: :submit_quest_response
 
-  resource :plant, only: [:show, :new, :create]
+  resource :plant, only: [:show, :new, :create, :edit, :update]
   resource :profile, only: [:show]
   get 'mon_profil', to: 'users#profile', as: 'mon_profil'
   get "achievements", to: "achievements#index", as: :achievements

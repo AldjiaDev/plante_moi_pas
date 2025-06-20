@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_20_104849) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_20_131722) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -63,6 +63,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_20_104849) do
     t.string "growth_stage"
     t.string "personality"
     t.datetime "last_mood_update_at"
+    t.string "color"
+    t.string "pot_style"
+    t.string "accessory"
     t.index ["user_id"], name: "index_plants_on_user_id"
   end
 

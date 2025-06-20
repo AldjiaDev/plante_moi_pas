@@ -53,6 +53,21 @@ class PlantsController < ApplicationController
     end
   end
 
+  def edit
+    @plant = current_user.plant
+    redirect_to new_plant_path unless @plant
+  end
+
+  def update
+    @plant = current_user.plant
+    if @plant.update(plant_params)
+      redirect_to plant_path, notice: "Ta plante a été mise à jour 🌿"
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+
 
   def water
     @plant = current_user.plant
@@ -108,9 +123,9 @@ class PlantsController < ApplicationController
 
 
 
-  private
+ private
 
   def plant_params
-    params.require(:plant).permit(:name, :personality)
+    params.require(:plant).permit(:name, :personality, :color, :pot_style, :accessory)
   end
 end

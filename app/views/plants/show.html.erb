@@ -38,35 +38,35 @@
     <p class="title">🌿 État de ta plante</p>
     <p class="nes-balloon from-left mb-3"><%= @plant.mood_phrase %></p>
 
+    <% emoji = case @plant.growth_stage
+              when "sprout" then "🌱"
+              when "leafy" then "🌿"
+              when "bushy" then "🌴"
+              when "tree" then "🌳"
+              else "🪴"
+              end %>
     <div class="text-center text-4xl my-3">
-      <% case @plant.growth_stage %>
-      <% when "sprout" %>
-        🌱
-      <% when "leafy" %>
-        🌿
-      <% when "bushy" %>
-        🌴
-      <% when "tree" %>
-        🌳
-      <% else %>
-        🪴
-      <% end %>
+      <%= emoji %>
     </div>
 
-    <p class="text-sm text-center">
-      <% case @plant.growth_stage %>
-      <% when "sprout" %>
-        Je viens de naître... ne m'oublie pas !
-      <% when "leafy" %>
-        Regarde comme je deviens feuillu 🌿
-      <% when "bushy" %>
-        Je suis touffue et fière 😎
-      <% when "tree" %>
-        Je suis devenue un arbre majestueux. Arrose-moi comme une reine 👑
-      <% else %>
-        État inconnu… ai-je été clonée ? 🤖
-      <% end %>
+    <% message = case @plant.growth_stage
+                when "sprout" then "Je viens de naître... ne m'oublie pas !"
+                when "leafy" then "Regarde comme je deviens feuillu 🌿"
+                when "bushy" then "Je suis touffue et fière 😎"
+                when "tree" then "Je suis devenue un arbre majestueux. Arrose-moi comme une reine 👑"
+                else "État inconnu… ai-je été clonée ? 🤖"
+                end %>
+    <p class="text-sm text-center mb-3">
+      <%= message %>
     </p>
+
+    <p><strong>Couleur principale :</strong> <%= @plant.color || "Non définie" %></p>
+    <p><strong>Style de pot :</strong> <%= @plant.pot_style || "Non défini" %></p>
+    <p><strong>Accessoire :</strong> <%= @plant.accessory || "Aucun" %></p>
+  </div>
+
+  <div class="text-center mt-4">
+    <%= link_to "✏️ Modifier ma plante", edit_plant_path, class: "nes-btn is-warning" %>
   </div>
 
   <div class="text-center">

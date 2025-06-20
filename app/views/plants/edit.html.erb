@@ -1,8 +1,8 @@
 <div class="container-gap">
   <div class="nes-container with-title is-rounded">
-    <p class="title">🌱 Crée ta plante</p>
+    <p class="title">✏️ Modifier ma plante</p>
 
-    <%= form_with model: @plant, url: plant_path, method: :post do |form| %>
+    <%= form_with model: @plant, local: true do |form| %>
       <div class="nes-field mb-4">
         <label for="plant_name">Nom de ta plante</label>
         <%= form.text_field :name, class: "nes-input", id: "plant_name" %>
@@ -16,40 +16,43 @@
           ["🐍 Agressive", "aggressive"],
           ["🌧️ Mélancolique", "melancholic"],
           ["🌈 Gentille", "gentle"]
-        ]), {}, class: "nes-select", id: "plant_personality" %>
+        ], @plant.personality), {}, class: "nes-select", id: "plant_personality" %>
       </div>
 
       <div class="nes-field mb-4">
         <label for="plant_color">Couleur principale</label>
         <%= form.select :color, options_for_select([
-          "Vert clair",
-          "Vert foncé",
-          "Jaune",
-          "Rose"
-        ]), {}, class: "nes-select", id: "plant_color" %>
+          ["Vert", "green"],
+          ["Rouge", "red"],
+          ["Bleu", "blue"],
+          ["Jaune", "yellow"],
+          ["Violet", "purple"]
+        ], @plant.color), {}, class: "nes-select", id: "plant_color" %>
       </div>
 
       <div class="nes-field mb-4">
         <label for="plant_pot_style">Style de pot</label>
         <%= form.select :pot_style, options_for_select([
-          "Classique",
-          "Moderne",
-          "Rustique",
-          "Fantaisie"
-        ]), {}, class: "nes-select", id: "plant_pot_style" %>
+          ["Classique", "classic"],
+          ["Moderne", "modern"],
+          ["Vintage", "vintage"],
+          ["Futuriste", "futuristic"]
+        ], @plant.pot_style), {}, class: "nes-select", id: "plant_pot_style" %>
       </div>
 
       <div class="nes-field mb-4">
         <label for="plant_accessory">Accessoire</label>
         <%= form.select :accessory, options_for_select([
-          "Chapeau",
-          "Lunettes",
-          "Pas d'accessoire"
-        ]), {}, class: "nes-select", id: "plant_accessory" %>
+          ["Aucun", ""],
+          ["Chapeau", "hat"],
+          ["Lunettes", "glasses"],
+          ["Écharpe", "scarf"],
+          ["Fleurs", "flowers"]
+        ], @plant.accessory), {}, class: "nes-select", id: "plant_accessory" %>
       </div>
 
       <div class="text-center">
-        <%= form.submit "Créer ma plante", class: "nes-btn is-success" %>
+        <%= form.submit "Mettre à jour ma plante", class: "nes-btn is-success" %>
       </div>
     <% end %>
   </div>
