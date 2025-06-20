@@ -1,91 +1,74 @@
-<div class="space-y-8">
+<div class="container-gap">
 
-  <!-- 🔔 Alerte si la plante n'est pas arrosée -->
   <% unless @log.watered? %>
-    <div class="bg-red-50 border border-red-200 text-red-700 p-4 rounded-2xl shadow-sm flex items-start gap-3">
-      <span class="text-2xl">💧</span>
-      <div>
-        <p class="font-medium">Tu n’as pas encore arrosé ta plante aujourd’hui…</p>
-        <p class="text-sm text-red-600 italic">Elle te regarde bizarrement.</p>
-        <div class="mt-3">
-          <%= button_to "💦 Arroser maintenant", water_plant_path, method: :post,
-              class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full shadow transition" %>
-        </div>
+    <div class="nes-container is-rounded is-error">
+      <p>💧 Tu n’as pas encore arrosé ta plante aujourd’hui… elle te regarde bizarrement.</p>
+      <div class="mt-2">
+        <%= button_to "💦 Arroser maintenant", water_plant_path, method: :post, class: "nes-btn is-primary" %>
       </div>
     </div>
   <% end %>
 
   <!-- 🎯 Quête du jour -->
-  <div class="bg-white border border-gray-200 rounded-3xl shadow-xl p-6">
-    <h2 class="text-2xl font-extrabold text-green-700 mb-3 flex items-center gap-2">🎯 Quête du jour</h2>
-
-    <p class="text-lg font-semibold text-gray-800"><%= @quest.title %></p>
-    <p class="text-gray-600 mb-4 leading-relaxed"><%= @quest.description %></p>
+  <div class="nes-container is-dark with-title is-rounded">
+    <p class="title">🎯 Quête du jour</p>
+    <p><strong><%= @quest.title %></strong></p>
+    <p><%= @quest.description %></p>
 
     <% if @log.quest_done? %>
-      <p class="text-green-600 font-medium">✅ Quête complétée</p>
+      <p class="mt-2">✅ Quête déjà complétée</p>
       <% if @log.quest_response.present? %>
-        <p class="text-sm italic text-gray-500 mt-1">Ta réponse : <%= @log.quest_response %></p>
+        <p class="nes-balloon from-left mt-2">Ta réponse : <%= @log.quest_response %></p>
       <% end %>
     <% elsif @quest.quest_type == "text_input" %>
-      <%= form_with url: submit_quest_response_path, method: :post, class: "space-y-3" do |form| %>
-        <div>
-          <%= form.label :quest_response, "Ta réponse :", class: "block font-medium text-gray-700" %>
-          <%= form.text_area :quest_response, rows: 3, class: "w-full border border-gray-300 rounded-xl p-3 mt-1 focus:ring-2 focus:ring-green-400 shadow-sm" %>
+      <%= form_with url: submit_quest_response_path, method: :post, class: "mt-3" do |form| %>
+        <div class="nes-field">
+          <label for="quest_response">Ta réponse :</label>
+          <%= form.text_area :quest_response, class: "nes-textarea", rows: 3 %>
         </div>
-        <%= form.submit "Envoyer", class: "bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-full shadow" %>
+        <div class="mt-2">
+          <%= form.submit "Envoyer", class: "nes-btn is-success" %>
+        </div>
       <% end %>
     <% else %>
-      <%= button_to "Faire la quête", quest_plant_path, method: :post,
-          class: "bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-full shadow" %>
+      <%= button_to "Faire la quête", quest_plant_path, method: :post, class: "nes-btn is-warning mt-2" %>
     <% end %>
   </div>
 
-  <!-- 🌱 État de la plante -->
-  <div class="bg-gradient-to-br from-green-50 to-white border border-green-100 rounded-3xl shadow-lg p-6 text-center">
-    <h2 class="text-2xl font-bold text-green-700 mb-3">🌿 État de ta plante</h2>
+  <!-- 🌿 État de la plante -->
+  <div class="nes-container with-title is-rounded">
+    <p class="title">🌿 État de ta plante</p>
 
-    <p class="italic text-purple-700 text-lg mb-4"><%= @plant.mood_phrase %></p>
+    <!-- 🗣️ Message d’humeur -->
+    <p class="nes-balloon from-left mb-3"><%= @plant.mood_phrase %></p>
 
-    <div class="text-7xl mb-2 transition-transform duration-300 hover:scale-105">
-      <% icon = {
-        "sprout" => "🌱",
-        "leafy" => "🌿",
-        "bushy" => "🌴",
-        "tree" => "🌳"
-      }[@plant.growth_stage] || "🪴" %>
-      <%= icon %>
+    <!-- 🌱 Stade visuel -->
+    <div class="text-center text-4xl my-3">
+      <%= case @plant.growth_stage
+        when "sprout" then "🌱"
+        when "leafy" then "🌿"
+        when "bushy" then "🌴"
+        when "tree" then "🌳"
+        else "🪴"
+      end %>
     </div>
 
-    <p class="text-gray-700 text-base leading-relaxed">
-      <% msg = {
-        "sprout" => "Je viens de naître... ne m'oublie pas !",
-        "leafy" => "Regarde comme je deviens feuillu 🌿",
-        "bushy" => "Je suis touffue et fière 😎",
-        "tree" => "Je suis devenue un arbre majestueux. Arrose-moi comme une reine 👑"
-      }[@plant.growth_stage] || "État inconnu… ai-je été clonée ? 🤖" %>
-      <%= msg %>
+    <!-- 📝 Message de stade -->
+    <p class="text-sm text-center">
+      <%= case @plant.growth_stage
+        when "sprout" then "Je viens de naître... ne m'oublie pas !"
+        when "leafy" then "Regarde comme je deviens feuillu 🌿"
+        when "bushy" then "Je suis touffue et fière 😎"
+        when "tree" then "Je suis devenue un arbre majestueux. Arrose-moi comme une reine 👑"
+        else "État inconnu… ai-je été clonée ? 🤖"
+      end %>
     </p>
   </div>
 
-  <!-- 🏆 Succès -->
-  <div class="bg-white border border-gray-200 rounded-3xl shadow p-6">
-    <h2 class="text-2xl font-bold text-yellow-600 mb-4">🏆 Succès débloqués</h2>
-
-    <% if @unlocked_achievements.any? %>
-      <ul class="space-y-2 text-gray-800">
-        <% @unlocked_achievements.each do |achievement| %>
-          <li class="flex items-start gap-2">
-            <span class="text-lg">✨</span>
-            <div>
-              <p class="font-semibold"><%= achievement.name %></p>
-              <p class="text-sm text-gray-600"><%= achievement.description %></p>
-            </div>
-          </li>
-        <% end %>
-      </ul>
-    <% else %>
-      <p class="text-gray-500 italic">Aucun succès encore… mais ça viendra 😏</p>
-    <% end %>
+  <!-- 🔗 Lien vers succès -->
+  <div class="text-center">
+    <%= link_to "🏆 Voir mes succès", achievements_path, class: "nes-btn is-primary" %>
   </div>
+
 </div>
+

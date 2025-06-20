@@ -1,0 +1,58 @@
+/*
+ *= require nes.min
+ *= require_self
+ */
+
+/* === Custom styles === */
+
+body {
+  font-family: 'Press Start 2P', cursive;
+  background-color: #f4f4f4;
+  color: #333;
+  padding: 20px;
+}
+
+.container-gap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Pour centrer et limiter la largeur du contenu */
+.main-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Marge entre les éléments de formulaire */
+.nes-field + .nes-field {
+  margin-top: 1rem;
+}
+
+/* Espace autour des sections NES */
+.nes-container {
+  margin-bottom: 1.5rem;
+}
+
+/* Amélioration boutons NES */
+.nes-btn {
+  font-size: 0.9rem;
+  text-transform: none;
+}
+
+/* Réduction des marges automatiques sur les boutons dans les formulaires */
+form .nes-btn {
+  margin-top: 1rem;
+}
+
+/* Responsive texte ballon */
+.nes-balloon {
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+/* Titres NES légèrement plus lisibles */
+.nes-container .title {
+  font-size: 1rem;
+}
+

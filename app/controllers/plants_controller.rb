@@ -13,7 +13,26 @@ class PlantsController < ApplicationController
     @log = @plant.daily_log
     @quest = @log.quest || @plant.assign_daily_quest!
     @unlocked_achievements = @user.achievements
+
+    @plant_emoji =
+      case @plant.growth_stage
+      when "sprout" then "🌱"
+      when "leafy" then "🌿"
+      when "bushy" then "🌴"
+      when "tree" then "🌳"
+      else "🪴"
+      end
+
+    @plant_stage_text =
+      case @plant.growth_stage
+      when "sprout" then "Je viens de naître... ne m'oublie pas !"
+      when "leafy" then "Regarde comme je deviens feuillu 🌿"
+      when "bushy" then "Je suis touffue et fière 😎"
+      when "tree" then "Je suis devenue un arbre majestueux. Arrose-moi comme une reine 👑"
+      else "État inconnu… ai-je été clonée ? 🤖"
+      end
   end
+
 
   def new
     @plant = current_user.build_plant

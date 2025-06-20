@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "achievements/index"
   get "profiles/show"
   devise_for :users
   get  "/plant",        to: "plants#show",      as: :plant
@@ -9,6 +10,7 @@ Rails.application.routes.draw do
   resource :plant, only: [:show, :new, :create]
   resource :profile, only: [:show]
   get 'mon_profil', to: 'users#profile', as: 'mon_profil'
+  get "achievements", to: "achievements#index", as: :achievements
 
 
 

@@ -1,0 +1,17 @@
+<div class="nes-container with-title is-rounded">
+  <p class="title">🏆 Tes succès débloqués</p>
+
+  <% if @unlocked_achievements.any? %>
+    <ul class="nes-list is-disc">
+      <% @unlocked_achievements.each do |achievement| %>
+        <li><strong><%= achievement.name %></strong> — <%= achievement.description %></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text-sm mt-2">Aucun succès débloqué pour le moment… mais continue ! 🚀</p>
+  <% end %>
+
+  <div class="mt-4 text-center">
+    <%= link_to "← Retour à ta plante", plant_path, class: "nes-btn is-primary" %>
+  </div>
+</div>

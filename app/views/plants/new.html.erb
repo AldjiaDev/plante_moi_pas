@@ -1,54 +1,27 @@
-<div class="max-w-md mx-auto bg-white shadow-lg rounded-xl p-6 border border-gray-200">
-  <h2 class="text-2xl font-bold text-green-700 mb-6 text-center">🌱 Crée ta plante</h2>
+<div class="container-gap">
+  <div class="nes-container with-title is-rounded">
+    <p class="title">🌱 Crée ta plante</p>
 
-  <%= form_with model: @plant, url: plant_path, method: :post, class: "space-y-5" do |form| %>
-    <div>
-      <%= form.label :name, "Nom de ta plante", class: "block text-gray-700 font-medium mb-1" %>
-      <%= form.text_field :name, class: "w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-400" %>
-    </div>
+    <%= form_with model: @plant, url: plant_path, method: :post do |form| %>
+      <div class="nes-field mb-4">
+        <label for="plant_name">Nom de ta plante</label>
+        <%= form.text_field :name, class: "nes-input", id: "plant_name" %>
+      </div>
 
-    <div>
-      <%= form.label :personality, "Personnalité", class: "block text-gray-700 font-medium mb-1" %>
-      <%= form.select :personality,
-        options_for_select([
+      <div class="nes-field mb-4">
+        <label for="plant_personality">Personnalité</label>
+        <%= form.select :personality, options_for_select([
           ["🎭 Drama Queen", "drama"],
           ["😏 Ironique", "ironic"],
           ["🐍 Agressive", "aggressive"],
           ["🌧️ Mélancolique", "melancholic"],
           ["🌈 Gentille", "gentle"]
-        ]),
-        {}, class: "w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-400"
-      %>
-    </div>
+        ]), {}, class: "nes-select", id: "plant_personality" %>
+      </div>
 
-    <div id="personality-preview" class="text-5xl text-center mt-2">🎭</div>
-
-    <div class="text-center">
-      <%= form.submit "Créer ma plante", class: "bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded shadow" %>
-    </div>
-  <% end %>
+      <div class="text-center">
+        <%= form.submit "Créer ma plante", class: "nes-btn is-success" %>
+      </div>
+    <% end %>
+  </div>
 </div>
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const select = document.querySelector("#plant_personality");
-    const preview = document.getElementById("personality-preview");
-
-    const emojis = {
-      "drama": "🎭",
-      "ironic": "😏",
-      "aggressive": "🐍",
-      "melancholic": "🌧️",
-      "gentle": "🌈"
-    };
-
-    const updatePreview = () => {
-      const value = select.value;
-      preview.textContent = emojis[value] || "";
-    };
-
-    select.addEventListener("change", updatePreview);
-    updatePreview();
-  });
-</script>
-
