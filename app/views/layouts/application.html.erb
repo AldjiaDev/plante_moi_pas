@@ -3,7 +3,6 @@
   <head>
     <title><%= content_for?(:title) ? yield(:title) : "Plante Moi Pas" %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -11,15 +10,12 @@
     <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
 
-    <!-- Ton CSS -->
     <%= stylesheet_link_tag "application", media: "all", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", type: "module", "data-turbo-track": "reload" %>
   </head>
 
   <body>
     <div class="main-container container-gap">
-
-      <!-- Header -->
       <header class="nes-container is-rounded with-title">
         <p class="title">🌿 Plante-moi pas</p>
         <nav class="flex space-x-3">
@@ -30,7 +26,6 @@
         </nav>
       </header>
 
-      <!-- Flash messages -->
       <% if notice %>
         <div class="nes-container is-success is-rounded">
           <%= notice %>
@@ -43,9 +38,7 @@
         </div>
       <% end %>
 
-      <!-- Contenu principal -->
-      <%= yield %>
-
+      <%= yield %>  <!-- rendu unique du contenu de la vue -->
     </div>
   </body>
 </html>

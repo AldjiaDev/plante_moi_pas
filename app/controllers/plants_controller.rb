@@ -58,6 +58,15 @@ class PlantsController < ApplicationController
     @plant = current_user.plant
     @plant.water_today!
 
+    care_log = CareLog.find_or_initialize_by(
+      user: current_user,
+      plant: @plant,
+      date: Date.today
+    )
+
+    care_log.watered = true
+    care_log.save!
+
     redirect_to plant_path, notice: "Merci de m’avoir arrosée 💦🌱 Je me sens déjà mieux !"
   end
 
@@ -73,6 +82,16 @@ class PlantsController < ApplicationController
     @plant = @user.plant
     response = params[:quest_response]
 
+    # Mise à jour ou création du CareLog du jour
+    today_log = CareLog.find_or_initialize_by(
+      user: @user,
+      plant: @plant,
+      date: Date.today
+    )
+    today_log.quest_done = true
+    today_log.quest_response = response if response.present?
+    today_log.save!
+
     result = @plant.submit_quest_response!(response)
 
     flash[:notice] =
@@ -86,6 +105,7 @@ class PlantsController < ApplicationController
 
     redirect_to plant_path
   end
+
 
 
   private

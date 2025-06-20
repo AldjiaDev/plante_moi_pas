@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_20_101530) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_20_104849) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,20 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_20_101530) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "care_logs", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "plant_id", null: false
+    t.boolean "watered"
+    t.boolean "quest_done"
+    t.string "mood"
+    t.text "quest_response"
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["plant_id"], name: "index_care_logs_on_plant_id"
+    t.index ["user_id"], name: "index_care_logs_on_user_id"
   end
 
   create_table "plant_logs", force: :cascade do |t|
@@ -86,6 +100,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_20_101530) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "care_logs", "plants"
+  add_foreign_key "care_logs", "users"
   add_foreign_key "plant_logs", "plants"
   add_foreign_key "plant_logs", "quests"
   add_foreign_key "plants", "users"

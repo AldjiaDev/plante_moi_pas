@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "care_logs/index"
   get "achievements/index"
   get "profiles/show"
   devise_for :users
@@ -11,6 +12,8 @@ Rails.application.routes.draw do
   resource :profile, only: [:show]
   get 'mon_profil', to: 'users#profile', as: 'mon_profil'
   get "achievements", to: "achievements#index", as: :achievements
+  get "/historique", to: "care_logs#index", as: :care_logs
+  resources :care_logs, only: [:index]
 
 
 

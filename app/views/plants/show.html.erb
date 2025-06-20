@@ -1,7 +1,7 @@
 <div class="container-gap">
 
   <% unless @log.watered? %>
-    <div class="nes-container is-rounded is-error">
+    <div class="nes-container is-rounded is-error mb-4">
       <p>💧 Tu n’as pas encore arrosé ta plante aujourd’hui… elle te regarde bizarrement.</p>
       <div class="mt-2">
         <%= button_to "💦 Arroser maintenant", water_plant_path, method: :post, class: "nes-btn is-primary" %>
@@ -9,8 +9,7 @@
     </div>
   <% end %>
 
-  <!-- 🎯 Quête du jour -->
-  <div class="nes-container is-dark with-title is-rounded">
+  <div class="nes-container is-dark with-title is-rounded mb-4">
     <p class="title">🎯 Quête du jour</p>
     <p><strong><%= @quest.title %></strong></p>
     <p><%= @quest.description %></p>
@@ -35,40 +34,48 @@
     <% end %>
   </div>
 
-  <!-- 🌿 État de la plante -->
-  <div class="nes-container with-title is-rounded">
+  <div class="nes-container with-title is-rounded mb-4">
     <p class="title">🌿 État de ta plante</p>
-
-    <!-- 🗣️ Message d’humeur -->
     <p class="nes-balloon from-left mb-3"><%= @plant.mood_phrase %></p>
 
-    <!-- 🌱 Stade visuel -->
     <div class="text-center text-4xl my-3">
-      <%= case @plant.growth_stage
-        when "sprout" then "🌱"
-        when "leafy" then "🌿"
-        when "bushy" then "🌴"
-        when "tree" then "🌳"
-        else "🪴"
-      end %>
+      <% case @plant.growth_stage %>
+      <% when "sprout" %>
+        🌱
+      <% when "leafy" %>
+        🌿
+      <% when "bushy" %>
+        🌴
+      <% when "tree" %>
+        🌳
+      <% else %>
+        🪴
+      <% end %>
     </div>
 
-    <!-- 📝 Message de stade -->
     <p class="text-sm text-center">
-      <%= case @plant.growth_stage
-        when "sprout" then "Je viens de naître... ne m'oublie pas !"
-        when "leafy" then "Regarde comme je deviens feuillu 🌿"
-        when "bushy" then "Je suis touffue et fière 😎"
-        when "tree" then "Je suis devenue un arbre majestueux. Arrose-moi comme une reine 👑"
-        else "État inconnu… ai-je été clonée ? 🤖"
-      end %>
+      <% case @plant.growth_stage %>
+      <% when "sprout" %>
+        Je viens de naître... ne m'oublie pas !
+      <% when "leafy" %>
+        Regarde comme je deviens feuillu 🌿
+      <% when "bushy" %>
+        Je suis touffue et fière 😎
+      <% when "tree" %>
+        Je suis devenue un arbre majestueux. Arrose-moi comme une reine 👑
+      <% else %>
+        État inconnu… ai-je été clonée ? 🤖
+      <% end %>
     </p>
   </div>
 
-  <!-- 🔗 Lien vers succès -->
   <div class="text-center">
     <%= link_to "🏆 Voir mes succès", achievements_path, class: "nes-btn is-primary" %>
   </div>
 
-</div>
+  <div class="nes-container with-title is-rounded mt-6 text-center">
+    <p class="title">Historique</p>
+    <%= link_to "🗓️ Voir l'historique des soins", care_logs_path, class: "nes-btn is-primary" %>
+  </div>
 
+</div>

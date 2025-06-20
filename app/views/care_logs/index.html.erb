@@ -1,0 +1,30 @@
+<h2 class="title">🗓️ Historique des soins</h2>
+
+<% if @care_logs.any? %>
+  <table class="nes-table is-bordered is-centered is-hoverable">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Arrosée</th>
+        <th>Quête complétée</th>
+        <th>Réponse à la quête</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @care_logs.each do |log| %>
+        <tr>
+          <td><%= log.date.strftime("%d %b %Y") %></td>
+          <td><%= log.watered ? "💧 Oui" : "❌ Non" %></td>
+          <td><%= log.quest_done ? "✅ Oui" : "❌ Non" %></td>
+          <td><%= log.quest_response.present? ? log.quest_response : "—" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>Aucun soin enregistré pour le moment.</p>
+<% end %>
+
+<div class="mt-4">
+  <%= link_to "⬅ Retour à ma plante", plant_path, class: "nes-btn is-primary" %>
+</div>
