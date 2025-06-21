@@ -56,3 +56,53 @@ user.plant.plant_logs.find_or_create_by!(date: Date.today) do |log|
 end
 
 puts "✅ Seeded user and dramatic plant!"
+
+questions_data = [
+  {
+    question: "Quelle plante a besoin de beaucoup de soleil ?",
+    answer: "Cactus",
+    options: ["Cactus", "Fougère", "Mousse", "Orchidée"]
+  },
+  {
+    question: "Combien de fois par semaine arroser une plante tropicale ?",
+    answer: "3 fois",
+    options: ["1 fois", "3 fois", "5 fois", "Jamais"]
+  },
+  {
+    question: "Quelle plante est connue pour purifier l'air ?",
+    answer: "Sansevieria",
+    options: ["Cactus", "Sansevieria", "Mousse", "Bambou"]
+  },
+  {
+    question: "Quelle plante ne nécessite presque pas d'eau ?",
+    answer: "Succulente",
+    options: ["Fougère", "Orchidée", "Succulente", "Bambou"]
+  },
+  {
+    question: "Quel est le meilleur moment pour arroser une plante ?",
+    answer: "Le matin",
+    options: ["Le matin", "Le soir", "En pleine journée", "N'importe quand"]
+  }
+]
+
+# Générer 20 variations de chaque question pour atteindre environ 100 questions
+questions = []
+20.times do |i|
+  questions_data.each do |q|
+    questions << {
+      question: "#{q[:question]} (Variante #{i + 1})",
+      answer: q[:answer],
+      options: q[:options].shuffle
+    }
+  end
+end
+
+questions.each do |q|
+  QuizQuestion.create!(
+    question: q[:question],
+    answer: q[:answer],
+    options: q[:options].to_json
+  )
+end
+
+puts "✅ Created #{questions.size} quiz questions"

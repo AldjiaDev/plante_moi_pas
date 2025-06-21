@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_20_131722) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_21_105311) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -79,6 +79,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_20_131722) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "quiz_questions", force: :cascade do |t|
+    t.string "question"
+    t.string "answer"
+    t.text "options"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "user_achievements", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "achievement_id", null: false
@@ -87,6 +95,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_20_131722) do
     t.datetime "updated_at", null: false
     t.index ["achievement_id"], name: "index_user_achievements_on_achievement_id"
     t.index ["user_id"], name: "index_user_achievements_on_user_id"
+  end
+
+  create_table "user_quiz_answers", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "quiz_question_id", null: false
+    t.string "given_answer"
+    t.boolean "correct"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quiz_question_id"], name: "index_user_quiz_answers_on_quiz_question_id"
+    t.index ["user_id"], name: "index_user_quiz_answers_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -99,6 +118,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_20_131722) do
     t.datetime "remember_created_at"
     t.string "encrypted_password", default: "", null: false
     t.string "name"
+    t.integer "leaves", default: 0, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -110,4 +130,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_20_131722) do
   add_foreign_key "plants", "users"
   add_foreign_key "user_achievements", "achievements"
   add_foreign_key "user_achievements", "users"
+  add_foreign_key "user_quiz_answers", "quiz_questions"
+  add_foreign_key "user_quiz_answers", "users"
 end

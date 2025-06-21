@@ -15,6 +15,10 @@ Rails.application.routes.draw do
   get "/historique", to: "care_logs#index", as: :care_logs
   resources :care_logs, only: [:index]
 
+  get "quiz/start", to: "quiz#start", as: :quiz_start
+  get "quiz/show", to: "quiz#show", as: :quiz_show
+  post "quiz/answer", to: "quiz#answer", as: :quiz_answer
+  get "quiz/result", to: "quiz#result", as: :quiz_result
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

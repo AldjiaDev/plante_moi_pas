@@ -1,0 +1,11 @@
+<h2>Résultat du quiz</h2>
+
+<p>Tu as eu <%= @correct_answers %> bonnes réponses sur 5.</p>
+
+<% if @correct_answers == 5 %>
+  <p>🎉 Bravo, tu gagnes 1 feuille !</p>
+<% else %>
+  <p>Essaie encore pour gagner des feuilles !</p>
+<% end %>
+
+<%= link_to "Recommencer le quiz", quiz_start_path, class: "nes-btn is-primary" %>

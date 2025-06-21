@@ -1,0 +1,14 @@
+<h2>Quiz 🌿 Question <%= session[:current_index] + 1 %> / 5</h2>
+
+<p><%= @question.question %></p>
+
+<%= form_with url: quiz_answer_path, method: :post do |form| %>
+  <% @options.each do |option| %>
+    <div>
+      <%= radio_button_tag :answer, option, false, id: "answer_#{option}" %>
+      <%= label_tag "answer_#{option}", option %>
+    </div>
+  <% end %>
+
+  <%= form.submit "Répondre" %>
+<% end %>
