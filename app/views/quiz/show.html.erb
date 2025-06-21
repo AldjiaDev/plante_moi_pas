@@ -1,5 +1,10 @@
 <h2>Quiz 🌿 Question <%= session[:current_index] + 1 %> / 5</h2>
 
+<!-- Timer visible -->
+<div id="timer" class="nes-text is-primary" style="font-weight: bold; font-size: 1.2rem; margin-bottom: 1rem;">
+  Temps restant : <span id="time-left">60</span> secondes
+</div>
+
 <p><%= @question.question %></p>
 
 <%= form_with url: quiz_answer_path, method: :post do |form| %>
@@ -10,5 +15,29 @@
     </div>
   <% end %>
 
-  <%= form.submit "Répondre" %>
+  <div style="margin-top: 1rem;">
+    <%= form.submit "Répondre", class: "nes-btn is-primary" %>
+  </div>
 <% end %>
+
+<script>
+  document.addEventListener('turbo:load', () => {
+    let timeLeft = 60;
+    const timeDisplay = document.getElementById('time-left');
+    const form = document.querySelector('form');
+
+    if (!timeDisplay || !form) return; // sécurité
+
+    const timer = setInterval(() => {
+      timeLeft--;
+      timeDisplay.textContent = timeLeft;
+
+      if (timeLeft <= 0) {
+        clearInterval(timer);
+        alert("Temps écoulé ! Réponse automatique envoyée.");
+        form.submit();
+      }
+    }, 1000);
+  });
+</script>
+
