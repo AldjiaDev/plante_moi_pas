@@ -38,15 +38,19 @@
     <p class="title">🌿 État de ta plante</p>
     <p class="nes-balloon from-left mb-3"><%= @plant.mood_phrase %></p>
 
-    <% emoji = case @plant.growth_stage
-              when "sprout" then "🌱"
-              when "leafy" then "🌿"
-              when "bushy" then "🌴"
-              when "tree" then "🌳"
-              else "🪴"
-              end %>
-    <div class="text-center text-4xl my-3">
-      <%= emoji %>
+    <div class="plant-sprite-container text-center my-6">
+      <% case @plant.growth_stage %>
+      <% when "sprout" %>
+        <%= image_tag "plants/sprout.png", alt: "Plante jeune", class: "nes-avatar is-rounded" %>
+      <% when "leafy" %>
+        <%= image_tag "plants/leafy.png", alt: "Plante feuillue", class: "nes-avatar is-rounded" %>
+      <% when "bushy" %>
+        <%= image_tag "plants/bushy.png", alt: "Plante touffue", class: "nes-avatar is-rounded" %>
+      <% when "tree" %>
+        <%= image_tag "plants/tree.png", alt: "Plante arbre", class: "nes-avatar is-rounded" %>
+      <% else %>
+        <%= image_tag "plants/default.png", alt: "Plante inconnue", class: "nes-avatar is-rounded" %>
+      <% end %>
     </div>
 
     <% message = case @plant.growth_stage
